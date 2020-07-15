@@ -10,6 +10,50 @@ class App
 {
     private $commandRegistry = [];
 
+    private $ruleRegistry = [
+        
+    ];
+
+    private $baseRules = [
+
+        Phpcmder\Rules\HasValueRule::class,
+
+        Phpcmder\Rules\TypeRule::class,
+
+        Phpcmder\Rules\NoStrayValuesRule::class,
+
+        Phpcmder\Rules\NoWarningRule::class,
+
+        Phpcmder\Rules\HasVarRule::class,
+
+        Phpcmder\Rules\MinVarRule::class,
+
+        Phpcmder\Rules\MaxVarRule::class,
+
+        Phpcmder\Rules\HasOptionRule::class,
+
+        Phpcmder\Rules\MinOptionRule::class,
+
+        Phpcmder\Rules\MaxOptionRule::class,
+
+        Phpcmder\Rules\AllowedVarRule::class,
+
+        Phpcmder\Rules\AllowedOptionRule::class,
+
+        //
+
+        Phpcmder\Rules\RequiredRule::class,
+
+        Phpcmder\Rules\MinRule::class,
+
+        Phpcmder\Rules\MaxRule::class,
+
+        Phpcmder\Rules\MatchesRule::class,
+
+
+
+    ];
+
     private $options = null;
 
     public $argv = [];
@@ -186,13 +230,14 @@ class App
                 "The command name is already set."
             );
         }
+        
         if (is_null($this->argv)) {
             throw new Exception(
                 "The server variables are not yet loaded."
             );
         }
 
-        $this->commandName = strtolower( $this->argv[0] );
+        $this->commandName = strtolower( $this->argv[0] ?? '' );
 
     }
 
@@ -203,24 +248,8 @@ class App
     {
         $this->linkIndex = [];
 
-        $this->chainRoot = null;
-
         foreach ($this->argv as $value) {
             $this->linkIndex[] = new ChainNode($value);
-        }
-
-        foreach ($this->linkIndex as $key => $value) {
-
-            if ($key !== 0){
-                $value->setUpNode( $this->linkIndex[$key - 1] );
-            }else{
-                $this->chainRoot = $value;
-            }
-
-            if ( ( count($this->linkIndex) - 1 ) !== $key ){
-                $value->setDownNode( $this->linkIndex[$key + 1] );
-            }
-
         }
 
 

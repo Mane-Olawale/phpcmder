@@ -1,0 +1,14 @@
+{
+    "name": "the-manetech/phpcmder",
+    "description": "This is a command line tool for php",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilesanmi Olawale Adedotun",
+            "email": "horlawaley001@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
